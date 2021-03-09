@@ -10,14 +10,14 @@ interface RequestTokenResolver {
 
     fun tokenHeaderName(): String = HttpHeaders.AUTHORIZATION
 
-    fun tokenResolver(header: String?): String {
-        if (header == null) {
+    fun tokenResolver(headerValue: String?): String {
+        if (headerValue == null) {
             throw UnauthenticatedUserException("${tokenHeaderName()} Header not present")
         }
-        if (!header.startsWith(BEARER_PREFIX)) {
+        if (!headerValue.startsWith(BEARER_PREFIX)) {
             throw UnauthenticatedUserException("Bearer Token is not present")
         }
 
-        return header.replace(BEARER_PREFIX, "")
+        return headerValue.replace(BEARER_PREFIX, "")
     }
 }
