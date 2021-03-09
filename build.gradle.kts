@@ -49,6 +49,9 @@ sonarqube {
     }
 }
 
+java {
+    withJavadocJar()
+}
 
 configure<JacocoPluginExtension> {
     toolVersion = "0.8.6"
