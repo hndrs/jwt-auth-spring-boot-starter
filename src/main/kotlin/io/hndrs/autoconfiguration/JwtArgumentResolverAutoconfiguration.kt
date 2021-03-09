@@ -37,12 +37,20 @@ class JwtArgumentResolverAutoconfiguration(
     }
 
 
+    /**
+     * Anonymous default implementation of [ClaimSetTransformer]
+     * that is [ConditionalOnMissingBean]
+     */
     @Bean
     @ConditionalOnMissingBean
     fun claimSetTransformer(): ClaimSetTransformer {
         return object : ClaimSetTransformer {}
     }
 
+    /**
+     * Anonymous default implementation of [RequestTokenResolver]
+     * that is [ConditionalOnMissingBean]
+     */
     @Bean
     @ConditionalOnMissingBean
     fun requestTokenResolver(): RequestTokenResolver {
