@@ -29,7 +29,7 @@ hndrs.jwt.key-store-path=/.well-known/jwks.json
 ```kotlin
 
 @GetMapping("/user")
-fun getUser(@User claimSet: Map<String, Any>): Map<String, Any> {
+fun getUser(@Identity claimSet: Map<String, Any>): Map<String, Any> {
     // do something with the user claimSet
     return claimSet
 }
