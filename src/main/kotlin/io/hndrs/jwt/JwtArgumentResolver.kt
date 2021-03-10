@@ -51,11 +51,11 @@ class JwtArgumentResolver(
             return claimsSet.claims
 
         } catch (e: BadJWTException) {
-            throw UnauthenticatedUserException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
+            throw UnauthorizedIdentityException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
         } catch (e: BadJOSEException) {
-            throw UnauthenticatedUserException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
+            throw UnauthorizedIdentityException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
         } catch (e: Exception) {
-            throw UnauthenticatedUserException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
+            throw UnauthorizedIdentityException("${e.javaClass.simpleName} (${e.message ?: NO_MESSAGE})")
         }
     }
 

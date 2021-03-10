@@ -1,7 +1,7 @@
 package io.hndrs.jwt
 
 /**
- * Interface to transform the claimset into an object
+ * Interface to transform the claimSet into an object
  */
 interface ClaimSetTransformer {
 

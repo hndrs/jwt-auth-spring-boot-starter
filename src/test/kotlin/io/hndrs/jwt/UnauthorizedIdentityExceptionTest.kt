@@ -4,11 +4,11 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
-internal class UnauthenticatedIdentityExceptionTest {
+internal class UnauthorizedIdentityExceptionTest {
 
     @Test
     fun nullMessage() {
-        val ex = UnauthenticatedUserException()
+        val ex = UnauthorizedIdentityException()
         Assertions.assertEquals("401 UNAUTHORIZED \"Access denied: No message\"", ex.message)
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, ex.status)
     }
@@ -16,7 +16,7 @@ internal class UnauthenticatedIdentityExceptionTest {
     @Test
     fun providedMessage() {
         val expectedMessage = "Exception Reason message"
-        val ex = UnauthenticatedUserException(expectedMessage)
+        val ex = UnauthorizedIdentityException(expectedMessage)
         Assertions.assertEquals("401 UNAUTHORIZED \"Access denied: $expectedMessage\"", ex.message)
         Assertions.assertEquals(HttpStatus.UNAUTHORIZED, ex.status)
     }
