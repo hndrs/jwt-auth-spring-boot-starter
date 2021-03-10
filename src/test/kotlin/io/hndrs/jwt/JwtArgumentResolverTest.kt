@@ -45,8 +45,14 @@ internal class JwtArgumentResolverTest {
         val methodParameter = MethodParameter(supportedParameterFunction.javaMethod!!, 0)
 
 
+        //native webRequest returns null
+        assertThrows(UnauthorizedIdentityException::class.java) {
+            argumentResolver.resolveArgument(methodParameter, null, mockk() {
+                every { getNativeRequest(HttpServletRequest::class.java) } returns null
+            }, null)
+        }
+
         //token resolver returns null
-        
         assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, mockk() {
                 every { getNativeRequest(HttpServletRequest::class.java) } returns mockk() {
