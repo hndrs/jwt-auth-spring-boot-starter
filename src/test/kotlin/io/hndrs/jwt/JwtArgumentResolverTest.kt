@@ -53,7 +53,7 @@ internal class JwtArgumentResolverTest {
         //BadJWTException
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJWTException("Message")
 
-        Assertions.assertThrows(UnauthenticatedUserException::class.java) {
+        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
         }
         clearMocks(jwtProcessor)
@@ -61,7 +61,7 @@ internal class JwtArgumentResolverTest {
         //BadJOSEException
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJOSEException("Message")
 
-        Assertions.assertThrows(UnauthenticatedUserException::class.java) {
+        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
         }
         clearMocks(jwtProcessor)
@@ -69,7 +69,7 @@ internal class JwtArgumentResolverTest {
         //Any other exception
         every { jwtProcessor.process(any<JWT>(), null) } throws IllegalStateException("Message")
 
-        Assertions.assertThrows(UnauthenticatedUserException::class.java) {
+        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
         }
         clearMocks(jwtProcessor)

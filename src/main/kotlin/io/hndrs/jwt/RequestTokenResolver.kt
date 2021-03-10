@@ -2,6 +2,9 @@ package io.hndrs.jwt
 
 import org.springframework.http.HttpHeaders
 
+/**
+ * Interface to resolve the token from a header
+ */
 interface RequestTokenResolver {
 
     companion object {
@@ -12,10 +15,10 @@ interface RequestTokenResolver {
 
     fun tokenResolver(headerValue: String?): String {
         if (headerValue == null) {
-            throw UnauthenticatedUserException("${tokenHeaderName()} Header not present")
+            throw UnauthorizedIdentityException("${tokenHeaderName()} Header not present")
         }
         if (!headerValue.startsWith(BEARER_PREFIX)) {
-            throw UnauthenticatedUserException("Bearer Token is not present")
+            throw UnauthorizedIdentityException("Bearer Token is not present")
         }
 
         return headerValue.replace(BEARER_PREFIX, "")

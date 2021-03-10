@@ -20,11 +20,11 @@ internal class RequestTokenResolverTest {
         val actual = requestTokenResolver.tokenResolver("Bearer $testToken")
         Assertions.assertEquals(testToken, actual)
 
-        Assertions.assertThrows(UnauthenticatedUserException::class.java) {
+        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
             requestTokenResolver.tokenResolver(null)
         }
 
-        Assertions.assertThrows(UnauthenticatedUserException::class.java) {
+        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
             requestTokenResolver.tokenResolver("TokenWithoutBearer Prefix")
         }
     }

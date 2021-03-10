@@ -60,11 +60,14 @@ class JwtArgumentResolverAutoconfiguration(
         return object : RequestTokenResolver {}
     }
 
+    /**
+     * [JWTProcessor] that parses and verifies the jwt token
+     */
     @Bean
     open fun jwtProcessor(): JWTProcessor<SecurityContext> {
         val keySelector = JWSVerificationKeySelector(
             JWSAlgorithm.RS256,
-            RemoteJWKSet(URL("${properties.issuer}${properties.keyStorePath}"))
+            RemoteJWKSet(URL(properties.keyStorePath))
         )
         val jwtProcessor = DefaultJWTProcessor<SecurityContext>()
         jwtProcessor.jwsKeySelector = keySelector
@@ -75,8 +78,9 @@ class JwtArgumentResolverAutoconfiguration(
 @ConfigurationProperties(PROPERTY_PREFIX)
 class JwtConfigurationProperties {
 
-    lateinit var issuer: String
-
+    /**
+     * Keystore Path that needs to point to a valid jwks
+     */
     lateinit var keyStorePath: String
 
     companion object {

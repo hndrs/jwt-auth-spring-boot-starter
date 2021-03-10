@@ -17,8 +17,7 @@ internal class JwtArgumentResolverAutoconfigurationTest {
     fun addArgumentResolvers() {
         WebApplicationContextRunner()
             .withPropertyValues(
-                "hndrs.jwt.issuer:https://issuer.domain.com",
-                "hndrs.jwt.key-store-path=/.well-known/jwks.json"
+                "hndrs.jwt.key-store-path=https://issuer.domain.com/.well-known/jwks.json"
             ).withConfiguration(AutoConfigurations.of(JwtArgumentResolverAutoconfiguration::class.java))
             .run {
                 val bean = it.getBean(WebMvcConfigurer::class.java)
@@ -32,8 +31,7 @@ internal class JwtArgumentResolverAutoconfigurationTest {
     fun argumentResolver() {
         WebApplicationContextRunner()
             .withPropertyValues(
-                "hndrs.jwt.issuer:https://issuer.domain.com",
-                "hndrs.jwt.key-store-path=/.well-known/jwks.json"
+                "hndrs.jwt.key-store-path=https://issuer.domain.com/.well-known/jwks.json"
             ).withConfiguration(AutoConfigurations.of(JwtArgumentResolverAutoconfiguration::class.java))
             .run {
                 Assertions.assertDoesNotThrow { it.getBean(JwtArgumentResolver::class.java) }
@@ -44,8 +42,7 @@ internal class JwtArgumentResolverAutoconfigurationTest {
     fun claimSetTransformer() {
         WebApplicationContextRunner()
             .withPropertyValues(
-                "hndrs.jwt.issuer:https://issuer.domain.com",
-                "hndrs.jwt.key-store-path=/.well-known/jwks.json"
+                "hndrs.jwt.key-store-path=https://issuer.domain.com/.well-known/jwks.json"
             ).withConfiguration(AutoConfigurations.of(JwtArgumentResolverAutoconfiguration::class.java))
             .run {
                 Assertions.assertDoesNotThrow { it.getBean(ClaimSetTransformer::class.java) }
@@ -56,8 +53,7 @@ internal class JwtArgumentResolverAutoconfigurationTest {
     fun requestTokenResolver() {
         WebApplicationContextRunner()
             .withPropertyValues(
-                "hndrs.jwt.issuer:https://issuer.domain.com",
-                "hndrs.jwt.key-store-path=/.well-known/jwks.json"
+                "hndrs.jwt.key-store-path=https://issuer.domain.com/.well-known/jwks.json"
             ).withConfiguration(AutoConfigurations.of(JwtArgumentResolverAutoconfiguration::class.java))
             .run {
                 Assertions.assertDoesNotThrow { it.getBean(RequestTokenResolver::class.java) }
@@ -68,8 +64,7 @@ internal class JwtArgumentResolverAutoconfigurationTest {
     fun jwtProcessor() {
         WebApplicationContextRunner()
             .withPropertyValues(
-                "hndrs.jwt.issuer:https://issuer.domain.com",
-                "hndrs.jwt.key-store-path=/.well-known/jwks.json"
+                "hndrs.jwt.key-store-path=https://issuer.domain.com/.well-known/jwks.json"
             ).withConfiguration(AutoConfigurations.of(JwtArgumentResolverAutoconfiguration::class.java))
             .run {
                 Assertions.assertDoesNotThrow { it.getBean(JWTProcessor::class.java) }
