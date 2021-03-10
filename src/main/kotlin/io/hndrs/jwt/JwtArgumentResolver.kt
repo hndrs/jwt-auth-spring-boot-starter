@@ -29,7 +29,7 @@ class JwtArgumentResolver(
         webRequest: NativeWebRequest,
         binderFactory: WebDataBinderFactory?
     ): Any {
-        val request = webRequest.getNativeRequest(HttpServletRequest::class.java)!!
+        val request = webRequest.getNativeRequest(HttpServletRequest::class.java)
 
         val resolvedToken = requestTokenResolver.tokenResolver(
             request?.getHeader(requestTokenResolver.tokenHeaderName())
