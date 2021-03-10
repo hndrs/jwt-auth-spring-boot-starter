@@ -8,7 +8,7 @@ import com.nimbusds.jwt.proc.JWTProcessor
 import io.mockk.clearMocks
 import io.mockk.every
 import io.mockk.mockk
-import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -68,29 +68,60 @@ internal class JwtArgumentResolverTest {
             }
         }
 
-        //BadJWTException
+        //BadJWTException with Message
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJWTException("Message")
 
-        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
+        val badJWTExceptionWithMessage = assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
+        assertEquals("401 UNAUTHORIZED \"Access denied: BadJWTException (Message)\"", badJWTExceptionWithMessage.message)
         clearMocks(jwtProcessor)
 
-        //BadJOSEException
+        //BadJWTException with Message
+        every { jwtProcessor.process(any<JWT>(), null) } throws BadJWTException(null)
+
+        val badJWTExceptionWithoutMessage = assertThrows(UnauthorizedIdentityException::class.java) {
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
+        }
+        assertEquals("401 UNAUTHORIZED \"Access denied: BadJWTException (No message)\"", badJWTExceptionWithoutMessage.message)
+        clearMocks(jwtProcessor)
+
+
+        //BadJOSEException with Message
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJOSEException("Message")
 
-        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
+        val badJOSEExceptionWithMessage = assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
         clearMocks(jwtProcessor)
+        assertEquals("401 UNAUTHORIZED \"Access denied: BadJOSEException (Message)\"", badJOSEExceptionWithMessage.message)
 
-        //Any other exception
+        //BadJOSEException with Message
+        every { jwtProcessor.process(any<JWT>(), null) } throws BadJOSEException(null)
+
+        val badJOSEExceptionWithoutMessage = assertThrows(UnauthorizedIdentityException::class.java) {
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
+        }
+        clearMocks(jwtProcessor)
+        assertEquals("401 UNAUTHORIZED \"Access denied: BadJOSEException (No message)\"", badJOSEExceptionWithoutMessage.message)
+
+        //Any other exception with Message
         every { jwtProcessor.process(any<JWT>(), null) } throws IllegalStateException("Message")
 
-        Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
+        val anyExceptionWithMessage = assertThrows(UnauthorizedIdentityException::class.java) {
             argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
         clearMocks(jwtProcessor)
+        assertEquals("401 UNAUTHORIZED \"Access denied: IllegalStateException (Message)\"", anyExceptionWithMessage.message)
+
+        //Any other exception without Message
+        every { jwtProcessor.process(any<JWT>(), null) } throws IllegalStateException()
+
+        val anyExceptionWithoutMessage = assertThrows(UnauthorizedIdentityException::class.java) {
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
+        }
+        clearMocks(jwtProcessor)
+        assertEquals("401 UNAUTHORIZED \"Access denied: IllegalStateException (No message)\"", anyExceptionWithoutMessage.message)
 
         every { jwtProcessor.process(any<JWT>(), null) } returns mockk() {
             every { claims } returns mapOf(
@@ -100,7 +131,7 @@ internal class JwtArgumentResolverTest {
 
         val resolvedArgument = argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
 
-        Assertions.assertEquals(
+        assertEquals(
             mapOf(
                 "sub" to "1234567890"
             ), resolvedArgument
