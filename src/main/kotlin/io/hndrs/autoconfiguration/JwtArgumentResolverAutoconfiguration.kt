@@ -31,6 +31,9 @@ class JwtArgumentResolverAutoconfiguration(
         resolvers.add(argumentResolver())
     }
 
+    /**
+     * [JwtArgumentResolver] that allows injecting jwt claims with [io.hndrs.jwt.Identity]
+     */
     @Bean
     open fun argumentResolver(): JwtArgumentResolver {
         return JwtArgumentResolver(jwtProcessor(), claimSetTransformer(), requestTokenResolver())

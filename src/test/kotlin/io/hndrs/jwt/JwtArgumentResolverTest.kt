@@ -92,7 +92,7 @@ internal class JwtArgumentResolverTest {
     private fun argumentResolver() = JwtArgumentResolver(mockk(), object : ClaimSetTransformer {}, object : RequestTokenResolver {})
 
     class TestClass {
-        fun testMethod(@User annotatedParam: Map<String, Any>, unannotatedParam: Map<String, Any>) {}
+        fun testMethod(@Identity annotatedParam: Map<String, Any>, unannotatedParam: Map<String, Any>) {}
     }
 
     companion object {

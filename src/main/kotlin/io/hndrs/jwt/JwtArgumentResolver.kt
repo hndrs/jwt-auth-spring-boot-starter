@@ -21,7 +21,7 @@ class JwtArgumentResolver(
     private val requestTokenResolver: RequestTokenResolver,
 ) : HandlerMethodArgumentResolver {
 
-    override fun supportsParameter(parameter: MethodParameter) = parameter.hasParameterAnnotation(User::class.java)
+    override fun supportsParameter(parameter: MethodParameter) = parameter.hasParameterAnnotation(Identity::class.java)
 
     override fun resolveArgument(
         parameter: MethodParameter,

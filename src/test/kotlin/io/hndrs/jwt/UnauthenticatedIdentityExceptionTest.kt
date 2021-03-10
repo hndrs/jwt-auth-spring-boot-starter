@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
 import org.springframework.http.HttpStatus
 
-internal class UnauthenticatedUserExceptionTest {
+internal class UnauthenticatedIdentityExceptionTest {
 
     @Test
     fun nullMessage() {
