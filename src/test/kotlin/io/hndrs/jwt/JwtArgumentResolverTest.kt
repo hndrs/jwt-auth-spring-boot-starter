@@ -10,6 +10,7 @@ import io.mockk.every
 import io.mockk.mockk
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertThrows
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.Test
 import org.springframework.core.MethodParameter
@@ -44,7 +45,18 @@ internal class JwtArgumentResolverTest {
         val methodParameter = MethodParameter(supportedParameterFunction.javaMethod!!, 0)
 
 
-        val nativeWebRequest = mockk<NativeWebRequest>() {
+        //token resolver returns null
+        
+        assertThrows(UnauthorizedIdentityException::class.java) {
+            argumentResolver.resolveArgument(methodParameter, null, mockk() {
+                every { getNativeRequest(HttpServletRequest::class.java) } returns mockk() {
+                    every { getHeader(any()) } returns null
+                }
+            }, null)
+        }
+
+
+        val nativeWebRequestWithToken = mockk<NativeWebRequest>() {
             every { getNativeRequest(HttpServletRequest::class.java) } returns mockk() {
                 every { getHeader(any()) } returns "Bearer $TEST_TOKEN"
             }
@@ -54,7 +66,7 @@ internal class JwtArgumentResolverTest {
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJWTException("Message")
 
         Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
-            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
         clearMocks(jwtProcessor)
 
@@ -62,7 +74,7 @@ internal class JwtArgumentResolverTest {
         every { jwtProcessor.process(any<JWT>(), null) } throws BadJOSEException("Message")
 
         Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
-            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
         clearMocks(jwtProcessor)
 
@@ -70,7 +82,7 @@ internal class JwtArgumentResolverTest {
         every { jwtProcessor.process(any<JWT>(), null) } throws IllegalStateException("Message")
 
         Assertions.assertThrows(UnauthorizedIdentityException::class.java) {
-            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
+            argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
         }
         clearMocks(jwtProcessor)
 
@@ -80,7 +92,7 @@ internal class JwtArgumentResolverTest {
             )
         }
 
-        val resolvedArgument = argumentResolver.resolveArgument(methodParameter, null, nativeWebRequest, null)
+        val resolvedArgument = argumentResolver.resolveArgument(methodParameter, null, nativeWebRequestWithToken, null)
 
         Assertions.assertEquals(
             mapOf(
