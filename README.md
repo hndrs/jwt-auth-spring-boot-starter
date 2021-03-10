@@ -20,8 +20,7 @@ dependencies {
 Adding the issuer and the jwks path for the verification to the ```application.properties```
 
 ```properties
-hndrs.jwt.issuer=https://domain.auth0.com
-hndrs.jwt.key-store-path=/.well-known/jwks.json
+hndrs.jwt.key-store-path=https://domain.auth0.com/.well-known/jwks.json
 ```
 
 #### Controller
