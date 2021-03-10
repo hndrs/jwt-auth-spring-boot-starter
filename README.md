@@ -52,7 +52,7 @@ fun requestTokenResolver(): RequestTokenResolver {
         }
 
         override fun tokenResolver(header: String?): String {
-            return header ?: throw UnauthenticatedUserException()
+            return header ?: throw UnauthorizedIdentityException()
         }
     }
 }
