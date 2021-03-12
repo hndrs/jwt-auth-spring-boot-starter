@@ -25,6 +25,8 @@ hndrs.jwt.key-store-path=https://domain.auth0.com/.well-known/jwks.json
 
 #### Controller
 
+To inject the claimSet into a ```RestController``` method just use the ```@Identity``` annotation on the parameter
+
 ```kotlin
 
 @GetMapping("/user")
