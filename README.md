@@ -42,8 +42,10 @@ format ```Bearer <jwt_token>```. To resolve the token from another header or in 
 the [RequestTokenResolver](src/main/kotlin/io/hndrs/jwt/RequestTokenResolver.kt)
 interface can be used.
 
+Resolving token from Header ```x-custom-header: Token <jwt_token>```
+
 ```kotlin
-    @Bean
+@Bean
 fun requestTokenResolver(): RequestTokenResolver {
     return object : RequestTokenResolver {
 
@@ -51,8 +53,15 @@ fun requestTokenResolver(): RequestTokenResolver {
             return "x-custom-header"
         }
 
-        override fun tokenResolver(header: String?): String {
-            return header ?: throw UnauthorizedIdentityException()
+        override fun tokenResolver(headerValue: String?): String {
+            if (headerValue == null) {
+                throw UnauthorizedIdentityException("${tokenHeaderName()} Header not present")
+            }
+            if (!headerValue.startsWith("Token ")) {
+                throw UnauthorizedIdentityException("Token is not present")
+            }
+
+            return headerValue.replace("Token ", "")
         }
     }
 }
@@ -64,6 +73,9 @@ fun requestTokenResolver(): RequestTokenResolver {
 By default the claimSet is represented as a ```Map<String, Any>``` to enrich or transform the map into a typed object a
 bean implementing the [ClaimSetTransformer](src/main/kotlin/io/hndrs/jwt/ClaimSetTransformer.kt)
 interface can be used.
+
+
+> Transforming claimSet to a CustomUser object
 
 ```kotlin
 data class CustomUser(val id: String, val name: String, val email: String)
@@ -83,15 +95,18 @@ fun claimSetTransformer(): ClaimSetTransformer {
 
 // transformed object
 @GetMapping("/user")
-fun getUser(@User user: CustomUser): CustomUser {
+fun getUser(@Identity user: CustomUser): CustomUser {
     // do something with the user claimSet
-    return claimSet
+    return user
 }
 ```
 
-> Transforming claimSet to a CustomUser object
+> Loading a user object
 
 ```kotlin
+
+interface UserRepository : MongoRepository<String, DatabaseUser>
+
 @Component
 class UserLoadingClaimSetTransformer(
     private val userRepository: UserRepository
@@ -100,6 +115,13 @@ class UserLoadingClaimSetTransformer(
         return userRepository.findById(claimSet["sub"] as String)
     }
 }
+
+// transformed object
+@GetMapping("/user")
+fun getUser(@Identity user: DatabaseUser): CustomUser {
+    // do something with the user claimSet
+    return user
+}
 ```
 
-> Loading a user object 
+ 
