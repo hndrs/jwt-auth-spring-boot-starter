@@ -13,11 +13,10 @@ buildscript {
 apply(plugin = "propdeps")
 apply(plugin = "propdeps-idea")
 
-val springBootDependencies: String by extra
 val kotlinVersion: String by extra
 
 plugins {
-    id("org.sonarqube").version("3.1.1")
+    id("org.sonarqube").version("3.3")
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -54,7 +53,7 @@ java {
 }
 
 configure<JacocoPluginExtension> {
-    toolVersion = "0.8.6"
+    toolVersion = "0.8.7"
 }
 
 tasks.withType<JacocoReport> {
@@ -88,9 +87,9 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test")
-    testImplementation(platform("org.junit:junit-bom:5.7.0"))
+    testImplementation(platform("org.junit:junit-bom:5.8.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.mockk:mockk:1.10.6")
+    testImplementation("io.mockk:mockk:1.12.0")
 }
 
 dependencyManagement {
@@ -98,7 +97,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootDependencies") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.4.2") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }
