@@ -7,7 +7,7 @@ buildscript {
         maven(url = "https://repo.spring.io/plugins-release")
     }
     dependencies {
-        classpath("io.spring.gradle:propdeps-plugin:0.0.9.RELEASE")
+        classpath("io.spring.gradle:propdeps-plugin:0.0.10.RELEASE")
     }
 }
 apply(plugin = "propdeps")
