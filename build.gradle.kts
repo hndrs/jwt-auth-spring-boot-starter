@@ -4,14 +4,8 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 buildscript {
     repositories {
         mavenCentral()
-        maven(url = "https://repo.spring.io/plugins-release")
-    }
-    dependencies {
-        classpath("io.spring.gradle:propdeps-plugin:0.0.9.RELEASE")
     }
 }
-apply(plugin = "propdeps")
-apply(plugin = "propdeps-idea")
 
 val kotlinVersion: String by extra
 
@@ -97,7 +91,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.4.2") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.5.6") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }
