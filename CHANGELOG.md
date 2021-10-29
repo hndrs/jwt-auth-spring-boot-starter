@@ -9,6 +9,7 @@ to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 - dependency upgrade kotlin 1.4.20 to 1.5.30
 - Bump spring-boot-dependencies from 2.4.2 to 2.5.6
+- chages JwtConfigurationProperties from ```class``` to ```data class```
 
 ## [1.0.0]
 
