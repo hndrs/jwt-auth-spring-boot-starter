@@ -14,7 +14,7 @@ pluginManagement {
         id("maven-publish")
         id("idea")
         id("io.hndrs.publishing-info").version(publishingInfo)
-        id("org.sonarqube").version(sonarVersion)
+        id("org.sonarqube").version("$sonarVersion")
     }
     repositories {
     }
