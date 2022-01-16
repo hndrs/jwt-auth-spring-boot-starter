@@ -8,8 +8,6 @@ buildscript {
 }
 
 val kotlinVersion: String by extra
-val springBootDependencies: String by extra
-
 
 plugins {
     id("org.sonarqube")
@@ -85,7 +83,7 @@ dependencies {
     testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test")
     testImplementation(platform("org.junit:junit-bom:5.8.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.mockk:mockk:1.12.1")
+    testImplementation("io.mockk:mockk:1.12.2")
 }
 
 dependencyManagement {
@@ -93,7 +91,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootDependencies") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.5.6") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }

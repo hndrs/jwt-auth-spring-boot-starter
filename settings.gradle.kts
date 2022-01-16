@@ -1,20 +1,17 @@
 pluginManagement {
     apply(from = "dependencies.gradle.kts")
 
-    val kotlinVersion: String by extra
-    val springDependencyManagement: String by extra
-    val publishingInfo: String by extra
-    val sonarVersion: String by extra
+    val kotlinVersion: String by settings
 
     plugins {
-        id("io.spring.dependency-management").version(springDependencyManagement)
+        id("io.spring.dependency-management").version("1.0.11.RELEASE")
         kotlin("jvm").version(kotlinVersion)
         kotlin("plugin.spring").version(kotlinVersion)
         kotlin("kapt").version(kotlinVersion)
         id("maven-publish")
         id("idea")
-        id("io.hndrs.publishing-info").version(publishingInfo)
-        id("org.sonarqube").version("$sonarVersion")
+        id("io.hndrs.publishing-info").version("2.0.0")
+        id("org.sonarqube").version("3.1.1")
     }
     repositories {
     }
