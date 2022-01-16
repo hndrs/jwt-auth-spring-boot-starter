@@ -1,16 +1,18 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-
 buildscript {
+    apply(from = "dependencies.gradle.kts")
     repositories {
         mavenCentral()
     }
 }
 
 val kotlinVersion: String by extra
+val springBootDependencies: String by extra
+
 
 plugins {
-    id("org.sonarqube").version("3.3")
+    id("org.sonarqube")
     id("io.spring.dependency-management")
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -19,7 +21,7 @@ plugins {
     id("idea")
     id("signing")
     jacoco
-    id("io.hndrs.publishing-info").version("2.0.0")
+    id("io.hndrs.publishing-info")
 }
 
 val isRelease = project.hasProperty("release")
@@ -91,7 +93,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.5.6") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:$springBootDependencies") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }
