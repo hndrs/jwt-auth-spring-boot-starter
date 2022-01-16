@@ -1,7 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    apply(from = "dependencies.gradle.kts")
     repositories {
         mavenCentral()
     }
@@ -72,7 +71,7 @@ tasks.withType<Test> {
 dependencies {
     api(group = "org.springframework.boot", name = "spring-boot-autoconfigure")
     api(group = "org.springframework.boot", name = "spring-boot-starter-web")
-    api(group = "com.nimbusds", name = "nimbus-jose-jwt")
+    api(group = "com.nimbusds", name = "nimbus-jose-jwt", version = "9.15.2")
 
     annotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
     kapt(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
@@ -81,7 +80,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 
     testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test")
-    testImplementation(platform("org.junit:junit-bom:5.8.1"))
+    testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation("io.mockk:mockk:1.12.2")
 }
@@ -91,7 +90,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.5.6") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.2") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }
