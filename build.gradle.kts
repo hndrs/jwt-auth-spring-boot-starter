@@ -82,7 +82,7 @@ dependencies {
     testImplementation(group = "org.springframework.boot", name = "spring-boot-starter-test")
     testImplementation(platform("org.junit:junit-bom:5.8.2"))
     testImplementation("org.junit.jupiter:junit-jupiter")
-    testImplementation("io.mockk:mockk:1.12.2")
+    testImplementation("io.mockk:mockk:1.13.3")
 }
 
 dependencyManagement {
