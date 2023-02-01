@@ -71,7 +71,7 @@ tasks.withType<Test> {
 dependencies {
     api(group = "org.springframework.boot", name = "spring-boot-autoconfigure")
     api(group = "org.springframework.boot", name = "spring-boot-starter-web")
-    api(group = "com.nimbusds", name = "nimbus-jose-jwt", version = "9.15.2")
+    api(group = "com.nimbusds", name = "nimbus-jose-jwt", version = "9.30.1")
 
     annotationProcessor(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
     kapt(group = "org.springframework.boot", name = "spring-boot-configuration-processor")
