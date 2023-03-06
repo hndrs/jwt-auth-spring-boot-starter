@@ -90,7 +90,7 @@ dependencyManagement {
         cacheChangingModulesFor(0, "seconds")
     }
     imports {
-        mavenBom("org.springframework.boot:spring-boot-dependencies:2.6.2") {
+        mavenBom("org.springframework.boot:spring-boot-dependencies:3.0.4") {
             bomProperty("kotlin.version", kotlinVersion)
         }
     }
